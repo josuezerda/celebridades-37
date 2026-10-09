@@ -1,0 +1,16 @@
+{
+  "titulo": "Trivia 37",
+  "premio": "Los 3 mejores puntajes se llevan un premio",
+  "preguntas": [
+    { "q": "¿Qué significan las siglas IA?", "o": ["Internet Avanzado", "Inteligencia Artificial", "Imagen Animada", "Información Automática"], "c": 1 },
+    { "q": "¿Qué empresa creó ChatGPT?", "o": ["Google", "Meta", "OpenAI", "Apple"], "c": 2 },
+    { "q": "¿Cuál fue la primera criptomoneda?", "o": ["Ethereum", "Bitcoin", "Dogecoin", "Litecoin"], "c": 1 },
+    { "q": "¿Qué significa WWW?", "o": ["World Wide Web", "Web World Wire", "Wide Web World", "World Web Window"], "c": 0 },
+    { "q": "¿Qué red social tiene un fantasma como ícono?", "o": ["TikTok", "Snapchat", "Pinterest", "Telegram"], "c": 1 },
+    { "q": "¿En qué año salió el primer iPhone?", "o": ["2005", "2007", "2009", "2011"], "c": 1 },
+    { "q": "¿Qué lenguaje da estilo a las páginas web?", "o": ["HTML", "Python", "CSS", "SQL"], "c": 2 },
+    { "q": "¿Qué significa NFT?", "o": ["Token No Fungible", "Nueva Fórmula Técnica", "Red de Fondos Digitales", "Nodo Fijo de Transacciones"], "c": 0 },
+    { "q": "¿Qué lleva un Aperol Spritz?", "o": ["Aperol, espumante y soda", "Aperol y cerveza", "Aperol y fernet", "Aperol y leche"], "c": 0 },
+    { "q": "¿Qué bebida es la base de un mojito?", "o": ["Vodka", "Ron", "Whisky", "Gin"], "c": 1 }
+  ]
+}
