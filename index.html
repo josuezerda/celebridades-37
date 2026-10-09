@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Josué 37 — Sunset Party</title>
+<meta name="description" content="Josué cumple 37. Sábado 10 de octubre, 19:00 hs, Hotel HT sector piscina. Confirmá tu asistencia.">
+<meta property="og:title" content="Josué cumple 37 · Sunset Party">
+<meta property="og:description" content="Sábado 10 de octubre · 19:00 hs · Hotel HT, sector piscina. Buena música, amigos y brindis al atardecer.">
+<meta property="og:image" content="https://celebridades.josuezerda.com.ar/img/invitacion.jpg">
+<meta name="theme-color" content="#1a0f08">
+<link rel="icon" href="img/invitacion.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital@1&family=Allura&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#160d07;--bg2:#21140c;--gold:#f0c27a;--gold2:#c98f45;--tx:#f6ebdc;--mut:#b8a58e;--line:rgba(240,194,122,.25)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font-family:'Montserrat',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden}
+.script{font-family:'Allura',cursive;font-weight:400}
+.gold{background:linear-gradient(180deg,#fff0cf,var(--gold) 45%,var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+/* Hero */
+.hero{position:relative;min-height:100svh;display:grid;place-items:center;background:#000}
+.hero img{width:100%;max-width:640px;display:block}
+.hero .scroll{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);color:var(--gold);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;animation:bob 2s infinite}
+@keyframes bob{50%{transform:translate(-50%,6px)}}
+@media(min-width:900px){.hero{background:linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.75)),url(img/pileta.jpg) center/cover}.hero img{box-shadow:0 0 80px rgba(240,194,122,.25);border:1px solid var(--line);max-height:100svh;width:auto}}
+section{padding:80px 0;text-align:center}
+.eyebrow{letter-spacing:.4em;text-transform:uppercase;font-size:.75rem;color:var(--gold)}
+h2{font-family:'Allura',cursive;font-weight:400;font-size:clamp(3rem,9vw,4.6rem);line-height:1.1;margin:6px 0 30px}
+.line{width:90px;height:1px;background:var(--gold);margin:0 auto 30px}
+/* Countdown */
+.count{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.count div{min-width:78px;padding:16px 8px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.03)}
+.count b{display:block;font-size:2rem;font-weight:500;color:var(--gold)}
+.count span{font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--mut)}
+/* Info */
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--bg2)}
+.info div{padding:34px 16px;border-right:1px solid var(--line)}
+.info div:last-child{border:0}
+.info svg{width:34px;height:34px;stroke:var(--gold);fill:none;stroke-width:1.4;margin-bottom:10px}
+.info b{display:block;font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.85rem}
+.info small{color:var(--mut);letter-spacing:.1em}
+.btn{display:inline-block;margin-top:26px;padding:14px 32px;border-radius:99px;border:1px solid var(--gold);color:var(--gold);letter-spacing:.2em;text-transform:uppercase;font-size:.75rem;font-weight:500;background:none;cursor:pointer;font-family:inherit;transition:.25s;text-decoration:none}
+.btn:hover{background:var(--gold);color:#1a0f08}
+.btn.fill{background:linear-gradient(90deg,var(--gold),var(--gold2));color:#1a0f08;border:0;font-weight:600}
+.lead{max-width:560px;margin:0 auto;color:var(--mut);font-size:1.05rem}
+/* Gallery */
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.gal img{width:100%;height:100%;object-fit:cover;border-radius:16px;border:1px solid var(--line);aspect-ratio:3/2}
+/* Menu */
+.menu img{width:100%;max-width:560px;border-radius:16px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5);cursor:zoom-in}
+/* RSVP */
+.rsvp{background:linear-gradient(180deg,var(--bg),var(--bg2))}
+form{max-width:460px;margin:0 auto;text-align:left;display:grid;gap:16px}
+label{font-size:.7rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+input,select,textarea{width:100%;margin-top:6px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--tx);font:inherit;font-size:1rem}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--gold)}
+select option{background:#21140c}
+.hp{position:absolute;left:-9999px}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg label{margin:0;cursor:pointer}
+.seg input{display:none}
+.seg span{display:block;text-align:center;padding:14px;border:1px solid var(--line);border-radius:12px;color:var(--tx);letter-spacing:.1em;text-transform:none;font-size:.9rem}
+.seg input:checked+span{background:var(--gold);color:#1a0f08;font-weight:600}
+#msg{text-align:center;min-height:1.5em;margin-top:6px}
+.ok{color:#9be3a8}.err{color:#ff9d8a}
+footer{padding:36px 20px;text-align:center;color:var(--mut);font-size:.8rem;letter-spacing:.15em;border-top:1px solid var(--line)}
+.rv{opacity:0;transform:translateY(26px);transition:.9s}.rv.on{opacity:1;transform:none}
+dialog{border:0;background:transparent;max-width:96vw;max-height:96vh;padding:0}dialog::backdrop{background:rgba(0,0,0,.9)}dialog img{max-width:96vw;max-height:96vh;display:block}
+@media(max-width:640px){.info{grid-template-columns:1fr}.info div{border-right:0;border-bottom:1px solid var(--line)}.gal{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <img src="img/invitacion.jpg" alt="Josué cumple 37 — Sábado 10 de octubre, 19:00 hs, Hotel HT sector piscina">
+  <div class="scroll">Deslizá ↓</div>
+</header>
+
+<section class="rv">
+  <div class="wrap">
+    <div class="eyebrow">Falta muy poco</div>
+    <h2 class="gold">Cuenta regresiva</h2>
+    <div class="count" id="count"><div><b>--</b><span>días</span></div><div><b>--</b><span>horas</span></div><div><b>--</b><span>min</span></div><div><b>--</b><span>seg</span></div></div>
+  </div>
+</section>
+
+<section class="rv" style="padding-top:0">
+  <div class="wrap">
+    <div class="eyebrow">Sunset Party</div>
+    <h2 class="gold">Josué 37</h2>
+    <p class="lead" style="margin-bottom:36px">Te esperamos con buena música, amigos y brindis al atardecer.</p>
+    <div class="info">
+      <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><b>Sábado</b><small>10 de octubre</small></div>
+      <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>19:00 hs</b><small>Puntual para el sunset</small></div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><b>Hotel HT</b><small>Sector piscina</small></div>
+    </div>
+    <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Hotel+HT+Santiago+del+Estero" target="_blank" rel="noopener">Cómo llegar</a>
+    <a class="btn" id="cal" href="#">Agregar al calendario</a>
+  </div>
+</section>
+
+<section class="rv" style="padding-top:0">
+  <div class="wrap">
+    <div class="gal"><img src="img/pileta.jpg" alt="Sector piscina de noche" loading="lazy"><img src="img/salon.jpg" alt="Ambientación del cumpleaños" loading="lazy"></div>
+  </div>
+</section>
+
+<section class="rv menu">
+  <div class="wrap">
+    <div class="eyebrow">Barra libre</div>
+    <h2 class="gold">Sunset Bar</h2>
+    <div class="line"></div>
+    <img src="img/menu.jpg" alt="Carta de tragos del Sunset Bar" id="menuimg" loading="lazy">
+  </div>
+</section>
+
+<section class="rv rsvp" id="rsvp">
+  <div class="wrap">
+    <div class="eyebrow">Tu presencia es mi mejor regalo</div>
+    <h2 class="gold">Confirmá tu asistencia</h2>
+    <form id="f" novalidate>
+      <div class="hp"><label>No completar<input name="web" tabindex="-1" autocomplete="off"></label></div>
+      <label>Nombre y apellido<input name="nombre" required maxlength="80" autocomplete="name"></label>
+      <div class="seg">
+        <label><input type="radio" name="asiste" value="si" checked><span>¡Voy!</span></label>
+        <label><input type="radio" name="asiste" value="no"><span>No puedo</span></label>
+      </div>
+      <label id="gl">¿Cuántas personas?
+        <select name="personas"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </label>
+      <label>Mensaje (opcional)<textarea name="mensaje" rows="3" maxlength="300" placeholder="Un saludo, restricción alimentaria…"></textarea></label>
+      <div style="text-align:center"><button class="btn fill" id="send" type="submit">Enviar confirmación</button><div id="msg" role="status"></div></div>
+    </form>
+  </div>
+</section>
+
+<footer>JOSUÉ 37 · SUNSET PARTY · 10.10.2026</footer>
+<dialog id="dlg"><img id="dimg" alt=""></dialog>
+
+<script>
+const T=new Date('2026-10-10T19:00:00-03:00');
+const cEl=document.querySelectorAll('#count b');
+function tick(){let d=Math.max(0,T-Date.now());const v=[d/864e5,d/36e5%24,d/6e4%60,d/1e3%60].map(x=>String(Math.floor(x)).padStart(2,'0'));cEl.forEach((e,i)=>e.textContent=v[i])}
+tick();setInterval(tick,1000);
+// Calendario (.ics)
+document.getElementById('cal').addEventListener('click',e=>{e.preventDefault();
+const ics=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT','DTSTART:20261010T220000Z','DTEND:20261011T040000Z','SUMMARY:Josué 37 · Sunset Party','LOCATION:Hotel HT - Sector piscina','DESCRIPTION:Buena música, amigos y brindis al atardecer.','END:VEVENT','END:VCALENDAR'].join('\r\n');
+const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='josue-37.ics';a.click()});
+// Zoom carta
+document.getElementById('menuimg').onclick=e=>{dimg.src=e.target.src;dlg.showModal()};dlg.onclick=()=>dlg.close();
+// Form
+const f=document.getElementById('f'),msg=document.getElementById('msg'),btn=document.getElementById('send');
+f.asiste.forEach?.call(f.asiste,r=>r.addEventListener('change',()=>gl.style.display=f.asiste.value==='no'?'none':''));
+f.addEventListener('submit',async e=>{e.preventDefault();
+if(!f.nombre.value.trim()){msg.className='err';msg.textContent='Escribí tu nombre.';return}
+btn.disabled=true;msg.className='';msg.textContent='Enviando…';
+try{const r=await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(f)))});
+const j=await r.json();if(!r.ok)throw new Error(j.error||'Error');
+msg.className='ok';msg.textContent=f.asiste.value==='si'?'¡Confirmado! Te esperamos 🥂':'Gracias por avisar. ¡Te vamos a extrañar!';f.reset()}
+catch(err){msg.className='err';msg.textContent='No se pudo enviar. Probá de nuevo en un momento.';btn.disabled=false}});
+// Reveal
+const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
