@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Plantillas WhatsApp — Josué 37</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Mr+Dafoe&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+body{background:#160d07;color:#f6ebdc;font-family:Montserrat,sans-serif;padding:40px 16px 80px}
+h1{font-family:'Mr Dafoe';font-weight:400;font-size:clamp(2.6rem,8vw,4rem);text-align:center;color:#f0c27a}
+.sub{text-align:center;color:#b8a58e;max-width:620px;margin:8px auto 40px;font-size:.95rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;max-width:1200px;margin:0 auto}
+.col h2{font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:#f0c27a;margin-bottom:4px}
+.col code{display:block;font-size:.75rem;color:#b8a58e;margin-bottom:12px}
+.chat{background:#0b141a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='2' cy='2' r='1' fill='%23ffffff08'/%3E%3C/svg%3E");border-radius:18px;padding:18px 14px}
+.msg{background:#202c33;border-radius:10px 10px 10px 2px;max-width:100%;overflow:hidden;box-shadow:0 1px 2px #0006}
+.msg img{width:100%;display:block}
+.msg .b{padding:10px 12px 8px;font-size:.92rem;line-height:1.45;color:#e9edef;white-space:pre-line}
+.msg .ft{padding:0 12px 8px;font-size:.78rem;color:#8696a0}
+.msg .tm{text-align:right;font-size:.68rem;color:#8696a0;padding:0 10px 6px}
+.btn{border-top:1px solid #0b141a;text-align:center;color:#53bdeb;padding:11px;font-size:.9rem}
+.note{max-width:760px;margin:44px auto 0;border:1px solid rgba(240,194,122,.25);border-radius:14px;padding:20px 24px;color:#b8a58e;font-size:.88rem;line-height:1.7}
+.note b{color:#f0c27a}
+</style>
+</head>
+<body>
+<h1>Plantillas de WhatsApp</h1>
+<p class="sub">Así se verán los 4 mensajes en el celular de tus invitados. <b style="color:#f0c27a">{{1}}</b> se reemplaza por el nombre de cada invitado.</p>
+
+<div class="grid">
+  <div class="col"><h2>1 · El día del evento</h2><code>evento_hoy · Marketing · es_AR</code>
+    <div class="chat"><div class="msg"><img src="hoy.jpg" alt="">
+      <div class="b">¡Hola {{1}}! 🥂 ¡Hoy es el gran día!
+
+Te esperamos esta noche en *Josué 37 · Sunset Party*.
+📅 Sábado 10 de octubre
+🕖 19:00 hs
+📍 Hotel HT, sector piscina
+
+Buena música, amigos y brindis al atardecer. ¡No faltes!</div>
+      <div class="ft">Josué 37 · Sunset Party</div><div class="tm">19:00</div>
+      <div class="btn">📍 Cómo llegar</div></div></div></div>
+
+  <div class="col"><h2>2 · Carta de bebidas</h2><code>evento_bebidas · Marketing · es_AR</code>
+    <div class="chat"><div class="msg"><img src="bebidas.jpg" alt="">
+      <div class="b">🍹 {{1}}, ya está abierto el *Sunset Bar*.
+
+Mirá la carta especial de tragos y pedí directo en la barra: Aperol, mojitos, caipi, fernet y más, con nombres a la altura de los 37.
+
+Tocá el botón y elegí el tuyo 👇</div>
+      <div class="ft">Josué 37 · Sunset Party</div><div class="tm">20:00</div>
+      <div class="btn">🔗 Ver carta de tragos</div></div></div></div>
+
+  <div class="col"><h2>3 · Juegos y premios</h2><code>evento_juegos · Marketing · es_AR</code>
+    <div class="chat"><div class="msg"><img src="juegos.jpg" alt="">
+      <div class="b">🎁 ¡{{1}}, es hora de jugar!
+
+Participá de los *juegos y sorteos* de la noche y ganá premios increíbles. Entrá desde el botón y sumate ahora.
+
+¡Mucha suerte! 🍀</div>
+      <div class="ft">Josué 37 · Sunset Party</div><div class="tm">21:00</div>
+      <div class="btn">🔗 Participar y ganar</div></div></div></div>
+
+  <div class="col"><h2>4 · Agradecimiento</h2><code>evento_gracias · Marketing · es_AR</code>
+    <div class="chat"><div class="msg"><img src="gracias.jpg" alt="">
+      <div class="b">💛 ¡Gracias, {{1}}!
+
+Gracias por ser parte de mi cumpleaños 37 y por hacer de esta noche algo inolvidable. Tu presencia fue el mejor regalo.
+
+¡Nos vemos en la próxima celebración!
+
+— Josué</div>
+      <div class="ft">Josué 37 · Sunset Party</div><div class="tm">12:00</div></div></div></div>
+</div>
+
+<div class="note">
+<b>Cómo funciona:</b> cada plantilla lleva una imagen de encabezado (JPG 1200×628), el texto con el nombre del invitado y, en las tres primeras, un botón con link. Meta revisa cada plantilla antes de habilitarla (suele tardar de minutos a unas horas).<br>
+<b>Links de los botones:</b> Cómo llegar → Google Maps · Carta → <i>celebridades.josuezerda.com.ar/bebidas</i> · Juegos → <i>celebridades.josuezerda.com.ar/juegos</i><br>
+<b>Importante:</b> Meta solo permite enviar a quienes aceptaron recibir mensajes de tu empresa.
+</div>
+</body>
+</html>
