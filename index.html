@@ -9,7 +9,9 @@
 <meta property="og:description" content="Sábado 10 de octubre · 19:00 hs · Hotel HT, sector piscina. Buena música, amigos y brindis al atardecer.">
 <meta property="og:image" content="https://37.josuezerda.com.ar/img/invitacion.jpg">
 <meta name="theme-color" content="#1a0f08">
-<link rel="icon" href="img/invitacion.jpg">
+<link rel="icon" type="image/png" sizes="48x48" href="/img/jz-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/img/jz-192.png">
+<link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital@1&family=Allura&family=Mr+Dafoe&display=swap" rel="stylesheet">
 <style>
@@ -80,7 +82,6 @@ select option{background:#21140c}
 .ok{color:#9be3a8}.err{color:#ff9d8a}
 footer{padding:36px 20px;text-align:center;color:var(--mut);font-size:.8rem;letter-spacing:.15em;border-top:1px solid var(--line)}
 .rv{opacity:0;transform:translateY(26px);transition:.9s}.rv.on{opacity:1;transform:none}
-dialog{border:0;background:transparent;max-width:96vw;max-height:96vh;padding:0}dialog::backdrop{background:rgba(0,0,0,.9)}dialog img{max-width:96vw;max-height:96vh;display:block}
 @media(max-width:640px){.info{grid-template-columns:1fr}.info div{border-right:0;border-bottom:1px solid var(--line)}.gal{grid-template-columns:1fr}}
 
 /* Entrada */
@@ -132,11 +133,24 @@ body:not(.go) .hero .bg{animation-play-state:paused}
 @media(max-width:360px){.count b{font-size:1.35rem}.t4{letter-spacing:.08em}}
 .hero{min-height:100vh;min-height:100svh}
 body{-webkit-text-size-adjust:100%}
+
+/* Lightbox */
+#lb{position:fixed;inset:0;z-index:200;background:rgba(5,3,1,.95);display:none;flex-direction:column}
+#lb.on{display:flex;animation:lbin .25s}@keyframes lbin{from{opacity:0}}
+#lbx{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;z-index:3;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(22,13,7,.85);color:var(--gold);font-size:1.2rem;cursor:pointer}
+.lbs{flex:1;overflow:auto;display:flex;padding:64px 12px 40px;-webkit-overflow-scrolling:touch}
+#lbi{margin:auto;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in;border-radius:10px}
+#lb.z #lbi{max-width:none;max-height:none;width:220%;cursor:zoom-out}
+.lbh{position:fixed;bottom:12px;left:0;right:0;text-align:center;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);pointer-events:none}
+#lb.z .lbh{display:none}
+.menu img,.poster{-webkit-touch-callout:none}
+.jz{width:64px;height:64px;border-radius:16px;display:block;margin:0 auto 14px;box-shadow:0 0 30px rgba(240,194,122,.25)}
 </style>
 </head>
 <body class="lock">
 <div id="gate">
   <div>
+    <img class="jz" src="/img/jz-192.png" alt="JZ">
     <div class="g1 gold">Josué 37</div>
     <div class="g2">Sunset Party</div>
     <button class="btn fill" id="open" type="button">Abrir invitación</button>
@@ -189,8 +203,8 @@ body{-webkit-text-size-adjust:100%}
   <div class="wrap">
     <div class="eyebrow">Tu invitación</div>
     <h2 class="gold">Guardala</h2>
-    <img class="poster" src="img/invitacion.jpg" alt="Invitación: Josué cumple 37, sábado 10 de octubre, 19:00 hs, Hotel HT sector piscina">
-    <a class="btn" href="img/invitacion.jpg" download="invitacion-josue-37.jpg">Descargar invitación</a>
+    <img class="poster" data-zoom style="cursor:zoom-in" src="img/invitacion.jpg" alt="Invitación: Josué cumple 37, sábado 10 de octubre, 19:00 hs, Hotel HT sector piscina">
+    <a class="btn" id="dl" href="/img/invitacion.jpg" download="invitacion-josue-37.jpg">Descargar invitación</a>
   </div>
 </section>
 
@@ -213,7 +227,7 @@ body{-webkit-text-size-adjust:100%}
     <div class="eyebrow">Barra libre</div>
     <h2 class="gold">Sunset Bar</h2>
     <div class="line"></div>
-    <img src="img/menu.jpg" alt="Carta de tragos del Sunset Bar" id="menuimg" loading="lazy">
+    <img src="img/menu.jpg" alt="Carta de tragos del Sunset Bar" id="menuimg" data-zoom loading="lazy">
   </div>
 </section>
 
@@ -237,8 +251,8 @@ body{-webkit-text-size-adjust:100%}
   </div>
 </section>
 
-<footer>JOSUÉ 37 · SUNSET PARTY · 10.10.2026</footer>
-<dialog id="dlg"><img id="dimg" alt=""></dialog>
+<footer><img class="jz" src="/img/jz-192.png" alt="JZ" style="width:48px;height:48px;border-radius:12px"> JOSUÉ 37 · SUNSET PARTY · 10.10.2026</footer>
+<div id="lb" role="dialog" aria-modal="true" aria-label="Imagen ampliada"><button id="lbx" type="button" aria-label="Cerrar">✕</button><div class="lbs"><img id="lbi" alt=""></div><div class="lbh">Tocá la imagen para acercar</div></div>
 
 <script>
 const T=new Date('2026-10-10T19:00:00-03:00');
@@ -287,8 +301,21 @@ x.fillStyle=`rgba(240,194,122,${.25+.5*Math.abs(Math.sin(p.a))})`;x.beginPath();
 document.getElementById('cal').addEventListener('click',e=>{e.preventDefault();
 const ics=['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT','DTSTART:20261010T220000Z','DTEND:20261011T040000Z','SUMMARY:Josué 37 · Sunset Party','LOCATION:Hotel HT - Sector piscina','DESCRIPTION:Buena música, amigos y brindis al atardecer.','END:VEVENT','END:VCALENDAR'].join('\r\n');
 const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='josue-37.ics';a.click()});
-// Zoom carta
-document.getElementById('menuimg').onclick=e=>{dimg.src=e.target.src;dlg.showModal()};dlg.onclick=()=>dlg.close();
+// Lightbox centrado con zoom y cierre (X, fondo o Esc)
+const lb=document.getElementById('lb'),lbi=document.getElementById('lbi');
+const lbOpen=s=>{lbi.src=s;lb.classList.remove('z');lb.classList.add('on');document.documentElement.style.overflow='hidden'};
+const lbClose=()=>{lb.classList.remove('on','z');document.documentElement.style.overflow=''};
+document.querySelectorAll('[data-zoom]').forEach(i=>i.addEventListener('click',()=>lbOpen(i.currentSrc||i.src)));
+lbi.addEventListener('click',e=>{e.stopPropagation();lb.classList.toggle('z')});
+document.getElementById('lbx').addEventListener('click',lbClose);
+lb.addEventListener('click',e=>{if(e.target===lb||e.target.classList.contains('lbs'))lbClose()});
+addEventListener('keydown',e=>{if(e.key==='Escape')lbClose()});
+// Descarga real de la invitación (sin abrir la imagen)
+document.getElementById('dl').addEventListener('click',async e=>{e.preventDefault();
+ try{const r=await fetch('/img/invitacion.jpg');const b=await r.blob();const f=new File([b],'invitacion-josue-37.jpg',{type:'image/jpeg'});
+  if(/iPhone|iPad|Android/i.test(navigator.userAgent)&&navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:'Josué 37 · Sunset Party'});return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),5000)
+ }catch(err){if(err&&err.name==='AbortError')return;window.location.href='/img/invitacion.jpg'}});
 // Form
 const f=document.getElementById('f'),msg=document.getElementById('msg'),btn=document.getElementById('send');
 f.asiste.forEach?.call(f.asiste,r=>r.addEventListener('change',()=>gl.style.display=f.asiste.value==='no'?'none':''));

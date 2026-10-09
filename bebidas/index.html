@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" sizes="48x48" href="/img/jz-48.png"><link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <title>Sunset Bar — Josué 37</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#160d07">
@@ -14,8 +15,10 @@
 .drink h3{font-family:'Mr Dafoe',cursive;font-weight:400;font-size:1.55rem;line-height:1.15;margin-top:-6px}
 .drink small{display:block;margin-top:6px;letter-spacing:.2em;text-transform:uppercase;font-size:.62rem;color:var(--mut)}
 .hint{text-align:center;color:var(--mut);font-size:.85rem;margin:6px 0 4px}
-#show{position:fixed;inset:0;z-index:50;background:rgba(10,5,2,.96);display:none;place-items:center;text-align:center;padding:24px}
-#show.on{display:grid;animation:in .3s}
+#show{position:fixed;inset:0;z-index:50;background:rgba(10,5,2,.96);display:none;align-items:center;justify-content:center;text-align:center;padding:24px;overflow:auto}
+#show>div{width:100%;max-width:420px;margin:auto}
+#x{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(22,13,7,.85);color:var(--gold);font-size:1.2rem;cursor:pointer;z-index:3}
+#show.on{display:flex;animation:in .3s}
 @keyframes in{from{opacity:0;transform:scale(.96)}}
 #show .k{letter-spacing:.4em;text-transform:uppercase;font-size:.7rem;color:var(--gold)}
 #show img{width:min(70vw,300px);margin:20px auto 0;display:block;border-radius:20px}
@@ -24,7 +27,7 @@
 </style></head><body>
 <canvas id="side"></canvas>
 <div class="wrap">
-  <div class="top"><div class="t gold">Josué 37</div><div class="s">Sunset Bar</div></div>
+  <div class="top"><img src="/img/jz-192.png" alt="JZ" style="width:56px;height:56px;border-radius:14px;display:block;margin:0 auto 4px"><div class="t gold">Josué 37</div><div class="s">Sunset Bar</div></div>
   <p class="hint">Tocá tu trago y mostrale la pantalla al barman 🥂</p>
 
   <div class="sec">Tragos</div>
@@ -34,7 +37,7 @@
 </div>
 <footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
 
-<div id="show" role="dialog" aria-modal="true"><div>
+<div id="show" role="dialog" aria-modal="true"><button id="x" type="button" aria-label="Cerrar">✕</button><div>
   <div class="k">Mostrale esto al barman</div>
   <img id="si" alt=""><div class="n gold" id="sn"></div><div class="d" id="sd"></div>
   <button class="btn" type="button" id="sx">Cerrar</button>
@@ -46,5 +49,5 @@ const I=[['fernet','El verdadero amor','Fernet'],['tinto','Ya no estamos para es
 const card=([f,n,d])=>`<button class="drink" type="button" data-f="${f}" data-n="${n}" data-d="${d}"><img src="/img/tragos/${f}.jpg" alt="${n}" loading="lazy"><h3 class="gold">${n}</h3><small>${d}</small></button>`;
 g1.innerHTML=T.map(card).join('');g2.innerHTML=I.map(card).join('');
 document.addEventListener('click',e=>{const b=e.target.closest('.drink');if(!b)return;si.src='/img/tragos/'+b.dataset.f+'.jpg';sn.textContent=b.dataset.n;sd.textContent=b.dataset.d;show.classList.add('on')});
-sx.onclick=()=>show.classList.remove('on');show.addEventListener('click',e=>{if(e.target===show)show.classList.remove('on')});
+const cl=()=>show.classList.remove('on');sx.onclick=cl;document.getElementById('x').onclick=cl;show.addEventListener('click',e=>{if(e.target===show)cl()});addEventListener('keydown',e=>{if(e.key==='Escape')cl()});
 </script></body></html>

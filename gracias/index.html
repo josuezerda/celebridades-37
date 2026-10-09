@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gracias — Josué 37</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#160d07">
+<link rel="icon" type="image/png" sizes="48x48" href="/img/jz-48.png"><link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Mr+Dafoe&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/shared.css">
+<style>
+.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:26px 22px;margin-bottom:18px;text-align:center}
+.card h2{font-family:'Mr Dafoe',cursive;font-weight:400;font-size:2.6rem;line-height:1.2;padding:.1em 0}
+.card p{color:var(--mut)}
+.vid{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000;margin-bottom:18px}
+.vid iframe,.vid video{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ph{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px}
+.ph img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:14px;border:1px solid var(--line);cursor:zoom-in}
+.act{text-align:center;margin:18px 0}
+#lb{position:fixed;inset:0;z-index:200;background:rgba(5,3,1,.95);display:none}
+#lb.on{display:flex}#lb img{margin:auto;max-width:96vw;max-height:90vh;border-radius:10px}
+#lbx{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(22,13,7,.85);color:var(--gold);font-size:1.2rem;cursor:pointer}
+</style></head><body>
+<canvas id="side"></canvas>
+<div class="wrap">
+  <div class="top"><img src="/img/jz-192.png" alt="JZ" style="width:56px;height:56px;border-radius:14px;display:block;margin:0 auto 4px"><div class="t gold">Josué 37</div><div class="s">Sunset Party</div></div>
+  <div class="card"><h2 class="gold" id="ti">Gracias</h2><p id="tx"></p></div>
+  <div id="media"></div>
+  <div class="act" id="act"></div>
+</div>
+<footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
+<div id="lb"><button id="lbx" type="button" aria-label="Cerrar">✕</button><img id="lbi" alt=""></div>
+<script src="/shared.js"></script>
+<script>
+(async()=>{
+ const slug=decodeURIComponent(location.pathname.split('/').filter(Boolean)[1]||'').toLowerCase();
+ let c={};try{c=await (await fetch('/gracias/config.json',{cache:'no-store'})).json()}catch(e){}
+ // Link variable: /gracias/<clave> redirige al enlace que definas en "links"
+ const l=c.links&&c.links[slug];if(l&&/^https?:\/\//.test(l)){location.replace(l);return}
+ ti.textContent=c.titulo||'Gracias';tx.textContent=c.texto||'';
+ const m=document.getElementById('media');let any=false;
+ if(c.video){any=true;const y=c.video.match(/(?:v=|youtu\.be\/|embed\/|^)([\w-]{11})(?:[&?]|$)/);
+  m.insertAdjacentHTML('beforeend',/youtu/.test(c.video)||/^[\w-]{11}$/.test(c.video)&&y?`<div class="vid"><iframe src="https://www.youtube.com/embed/${y[1]}?rel=0&playsinline=1" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe></div>`:`<div class="vid"><video src="${c.video}" controls playsinline></video></div>`)}
+ if(c.fotos&&c.fotos.length){any=true;m.insertAdjacentHTML('beforeend','<div class="ph">'+c.fotos.map(f=>`<img src="${f}" loading="lazy" alt="Foto de la noche">`).join('')+'</div>')}
+ if(c.album&&/^https?:\/\//.test(c.album)){any=true;act.innerHTML=`<a class="btn fill" href="${c.album}" target="_blank" rel="noopener">Ver álbum completo</a>`}
+ if(!any)m.innerHTML='<div class="card"><p>Muy pronto vas a poder ver acá las fotos y el video de la noche. ¡Gracias por ser parte! 💛</p></div>';
+ m.addEventListener('click',e=>{if(e.target.matches('.ph img')){lbi.src=e.target.src;lb.classList.add('on')}});
+ const cl=()=>lb.classList.remove('on');lbx.onclick=cl;lb.onclick=e=>{if(e.target===lb)cl()};addEventListener('keydown',e=>{if(e.key==='Escape')cl()});
+})();
+</script></body></html>
