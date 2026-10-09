@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sunset Bar — Josué 37</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#160d07">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Mr+Dafoe&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/shared.css">
+<style>
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.drink{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:18px;padding:0 10px 14px;text-align:center;cursor:pointer;font:inherit;color:inherit;transition:.25s;display:block;width:100%}
+.drink:active{transform:scale(.97);border-color:var(--gold)}
+.drink img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top;display:block;-webkit-mask-image:linear-gradient(#000 70%,transparent);mask-image:linear-gradient(#000 70%,transparent)}
+.drink h3{font-family:'Mr Dafoe',cursive;font-weight:400;font-size:1.55rem;line-height:1.15;margin-top:-6px}
+.drink small{display:block;margin-top:6px;letter-spacing:.2em;text-transform:uppercase;font-size:.62rem;color:var(--mut)}
+.hint{text-align:center;color:var(--mut);font-size:.85rem;margin:6px 0 4px}
+#show{position:fixed;inset:0;z-index:50;background:rgba(10,5,2,.96);display:none;place-items:center;text-align:center;padding:24px}
+#show.on{display:grid;animation:in .3s}
+@keyframes in{from{opacity:0;transform:scale(.96)}}
+#show .k{letter-spacing:.4em;text-transform:uppercase;font-size:.7rem;color:var(--gold)}
+#show img{width:min(70vw,300px);margin:20px auto 0;display:block;border-radius:20px}
+#show .n{font-family:'Mr Dafoe',cursive;font-size:clamp(3rem,15vw,5rem);line-height:1.15;display:inline-block;padding:.1em .3em .1em .2em}
+#show .d{letter-spacing:.35em;text-transform:uppercase;font-size:.95rem;color:var(--tx);margin:4px 0 30px}
+</style></head><body>
+<canvas id="side"></canvas>
+<div class="wrap">
+  <div class="top"><div class="t gold">Josué 37</div><div class="s">Sunset Bar</div></div>
+  <p class="hint">Tocá tu trago y mostrale la pantalla al barman 🥂</p>
+
+  <div class="sec">Tragos</div>
+  <div class="grid" id="g1"></div>
+  <div class="sec">Los infaltables</div>
+  <div class="grid" id="g2"></div>
+</div>
+<footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
+
+<div id="show" role="dialog" aria-modal="true"><div>
+  <div class="k">Mostrale esto al barman</div>
+  <img id="si" alt=""><div class="n gold" id="sn"></div><div class="d" id="sd"></div>
+  <button class="btn" type="button" id="sx">Cerrar</button>
+</div></div>
+<script src="/shared.js"></script>
+<script>
+const T=[['atardecido','El Atardecido','Aperol con naranja'],['los37','Los 37 me sientan bien','Aperol Spritz'],['unamas','Una más y me voy','Mojito de limón'],['dulce','Dulce pero peligroso','Mojito de frutos rojos'],['vacaciones','Modo vacaciones','Caipi Malibú'],['sunset','Se picó el sunset','Vodka']];
+const I=[['fernet','El verdadero amor','Fernet'],['tinto','Ya no estamos para esto','Vino tinto'],['blanco','Dulces 37','Vino blanco dulce'],['cerveza','La vieja confiable','Cerveza']];
+const card=([f,n,d])=>`<button class="drink" type="button" data-f="${f}" data-n="${n}" data-d="${d}"><img src="/img/tragos/${f}.jpg" alt="${n}" loading="lazy"><h3 class="gold">${n}</h3><small>${d}</small></button>`;
+g1.innerHTML=T.map(card).join('');g2.innerHTML=I.map(card).join('');
+document.addEventListener('click',e=>{const b=e.target.closest('.drink');if(!b)return;si.src='/img/tragos/'+b.dataset.f+'.jpg';sn.textContent=b.dataset.n;sd.textContent=b.dataset.d;show.classList.add('on')});
+sx.onclick=()=>show.classList.remove('on');show.addEventListener('click',e=>{if(e.target===show)show.classList.remove('on')});
+</script></body></html>
