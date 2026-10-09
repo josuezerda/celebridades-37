@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [{ "type": "host", "value": "celebridades.josuezerda.com.ar" }],
+      "destination": "https://37.josuezerda.com.ar/:path",
+      "permanent": false
+    }
+  ]
+}
