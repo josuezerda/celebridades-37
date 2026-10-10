@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Josué 37 — Pantalla</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" sizes="48x48" href="/img/jz-48.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Mr+Dafoe&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#f0c27a;--gold2:#c98f45;--tx:#f6ebdc;--mut:#b8a58e}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;background:#000;color:var(--tx);font-family:'Montserrat',sans-serif;overflow:hidden;cursor:default}
+body.idle{cursor:none}
+.bg{position:fixed;inset:-6%;background-size:cover;background-position:center;opacity:0;transition:opacity 2.4s ease;filter:brightness(.55)}
+.bg.on{opacity:1;animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1) translate(0,0)}to{transform:scale(1.14) translate(-1.5%,1%)}}
+.shade{position:fixed;inset:0;background:radial-gradient(70% 60% at 50% 50%,rgba(0,0,0,.05),rgba(0,0,0,.65))}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+.stage{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.jz{width:clamp(48px,6vw,110px);border-radius:22%;margin-bottom:1.5vh;box-shadow:0 0 40px rgba(240,194,122,.35);animation:fl 6s ease-in-out infinite}
+.title{font-family:'Mr Dafoe',cursive;font-size:clamp(5rem,22vw,26rem);line-height:1.05;padding:.15em .45em .1em .3em;background:linear-gradient(100deg,#c98f45 0%,#fff0cf 25%,#f0c27a 40%,#c98f45 60%,#fff0cf 80%,#c98f45 100%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite,fl 7s ease-in-out infinite,glow 4s ease-in-out infinite;display:inline-block}
+@keyframes shine{to{background-position:-300% 0}}
+@keyframes fl{50%{transform:translateY(-1.2vh)}}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 1.2vw rgba(240,194,122,.35))}50%{filter:drop-shadow(0 0 3vw rgba(240,194,122,.85))}}
+.sub{height:2.6em;position:relative;width:100%;margin-top:1vh;font-size:clamp(.9rem,2.1vw,2.8rem);letter-spacing:.5em;text-transform:uppercase;padding-left:.5em}
+.sub span{position:absolute;left:0;right:0;opacity:0;transform:translateY(1.2vh);transition:opacity 1.2s,transform 1.2s}
+.sub span.on{opacity:1;transform:none}
+.sub b{color:var(--gold);font-weight:600}
+.qr{position:fixed;right:3vw;bottom:5vh;display:flex;align-items:center;gap:1.4vw;background:rgba(10,5,2,.7);border:1px solid rgba(240,194,122,.45);border-radius:1.6vw;padding:1.1vw 1.6vw;backdrop-filter:blur(8px);opacity:0;transform:translateY(2vh);transition:opacity 1s,transform 1s}
+.qr.on{opacity:1;transform:none}
+.qr img{width:clamp(90px,10vw,200px);aspect-ratio:1;border-radius:1vw;background:#fff;padding:.5vw}
+.qr .k{letter-spacing:.35em;text-transform:uppercase;font-size:clamp(.6rem,.9vw,1.2rem);color:var(--gold)}
+.qr .n{font-family:'Mr Dafoe',cursive;font-size:clamp(2rem,4vw,5.5rem);line-height:1.15;background:linear-gradient(180deg,#fff0cf,#f0c27a,#c98f45);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .2em}
+.qr .u{font-size:clamp(.6rem,.85vw,1.1rem);color:var(--mut);letter-spacing:.08em}
+.hint{position:fixed;left:50%;bottom:2.5vh;transform:translateX(-50%);font-size:.75rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(246,235,220,.55);transition:opacity 1s}
+.hint.off{opacity:0}
+#fs{position:fixed;inset:0;background:transparent;border:0;z-index:5;cursor:inherit}
+@media(max-width:700px){.qr{left:50%;right:auto;transform:translate(-50%,2vh);bottom:3vh}.qr.on{transform:translate(-50%,0)}}
+</style></head><body>
+<div class="bg" id="b0"></div><div class="bg" id="b1"></div>
+<div class="shade"></div><canvas id="c"></canvas>
+<div class="stage">
+  <img class="jz" src="/img/jz-192.png" alt="">
+  <div class="title">Josué 37</div>
+  <div class="sub" id="sub">
+    <span class="on"><b>Sunset Party</b></span>
+    <span>Cumple 37</span>
+    <span>Sábado <b>10 de octubre</b> · <b>19:00 hs</b></span>
+    <span>Hotel HT · <b>Sector piscina</b></span>
+    <span>Buena música · Amigos · <b>Brindis al atardecer</b></span>
+  </div>
+</div>
+<div class="qr" id="qr"><img id="qi" alt=""><div><div class="k" id="qk"></div><div class="n" id="qn"></div><div class="u" id="qu"></div></div></div>
+<div class="hint" id="hint">Tocá la pantalla o presioná F para pantalla completa</div>
+<button id="fs" aria-label="Pantalla completa"></button>
+<script>
+// Fondos que rotan con fundido
+const IM=['/img/pileta.jpg','/img/salon.jpg'];let bi=0,cur=0;const B=[b0,b1];
+B[0].style.backgroundImage=`url(${IM[0]})`;B[0].classList.add('on');
+setInterval(()=>{bi=(bi+1)%IM.length;const n=1-cur;B[n].style.backgroundImage=`url(${IM[bi]})`;B[n].classList.add('on');B[cur].classList.remove('on');cur=n},12000);
+// Subtítulos rotativos
+const S=[...document.querySelectorAll('#sub span')];let si=0;
+setInterval(()=>{S[si].classList.remove('on');si=(si+1)%S.length;S[si].classList.add('on')},5000);
+// QR rotativos (escaneables desde el celular)
+const SITE='https://37.josuezerda.com.ar';
+const Q=[['Sunset Bar','Pedí tu trago','/bebidas'],['Trivia 37','Jugá y ganá','/trivia'],['Juegos y Sorteos','Sumate al sorteo','/juegos'],['Invitación','Todos los detalles','/']];
+let qi=0;const q=document.getElementById('qr');
+function showQ(){const [n,k,p]=Q[qi];document.getElementById('qi').src='https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data='+encodeURIComponent(SITE+p);
+ document.getElementById('qk').textContent=k;document.getElementById('qn').textContent=n;document.getElementById('qu').textContent='37.josuezerda.com.ar'+(p==='/'?'':p);
+ q.classList.add('on');setTimeout(()=>q.classList.remove('on'),9000);qi=(qi+1)%Q.length}
+setTimeout(showQ,3000);setInterval(showQ,13000);
+// Partículas doradas por toda la pantalla
+const cv=document.getElementById('c'),x=cv.getContext('2d');let W,H,P=[],R=[];
+const rs=()=>{const d=devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0)};rs();addEventListener('resize',rs);
+const mk=(init)=>{const side=Math.random()<.6,l=Math.random()<.5,w=W*.22;return{x:side?(l?Math.random()*w:W-Math.random()*w):Math.random()*W,y:init?Math.random()*H:H+10,v:.4+Math.random()*1.4,r:.8+Math.random()*2.6,a:Math.random()*6,s:Math.random()<.2}};
+for(let i=0;i<Math.min(160,W/9|0);i++)P.push(mk(true));
+function star(px,py,r,al){x.fillStyle=`rgba(255,240,207,${al})`;x.beginPath();x.moveTo(px,py-r*3);x.lineTo(px+r*.6,py-r*.6);x.lineTo(px+r*3,py);x.lineTo(px+r*.6,py+r*.6);x.lineTo(px,py+r*3);x.lineTo(px-r*.6,py+r*.6);x.lineTo(px-r*3,py);x.lineTo(px-r*.6,py-r*.6);x.fill()}
+setInterval(()=>{const cx=W*(.25+Math.random()*.5),cy=H*(.2+Math.random()*.4);for(let i=0;i<40;i++){const a=Math.random()*6.28,v=1+Math.random()*4;R.push({x:cx,y:cy,vx:Math.cos(a)*v,vy:Math.sin(a)*v-1,l:1,r:1+Math.random()*2})}},4500);
+(function f(){x.clearRect(0,0,W,H);
+ for(const p of P){p.y-=p.v;p.a+=.03;p.x+=Math.sin(p.a)*.4;if(p.y<-20)Object.assign(p,mk(false));const al=.25+.6*Math.abs(Math.sin(p.a));
+  if(p.s)star(p.x,p.y,p.r,al);else{x.fillStyle=`rgba(240,194,122,${al})`;x.shadowColor='rgba(240,194,122,.9)';x.shadowBlur=10;x.beginPath();x.arc(p.x,p.y,p.r,0,7);x.fill();x.shadowBlur=0}}
+ for(let i=R.length-1;i>=0;i--){const b=R[i];b.x+=b.vx;b.y+=b.vy;b.vy+=.05;b.vx*=.985;b.l-=.01;if(b.l<=0){R.splice(i,1);continue}x.fillStyle=`rgba(255,226,170,${b.l})`;x.beginPath();x.arc(b.x,b.y,b.r,0,7);x.fill()}
+ requestAnimationFrame(f)})();
+// Pantalla completa, cursor oculto y pantalla siempre encendida
+const fsToggle=()=>{const d=document;if(!d.fullscreenElement&&!d.webkitFullscreenElement){(d.documentElement.requestFullscreen||d.documentElement.webkitRequestFullscreen||(()=>{})).call(d.documentElement)}else{(d.exitFullscreen||d.webkitExitFullscreen).call(d)}wake()};
+document.getElementById('fs').addEventListener('click',fsToggle);
+addEventListener('keydown',e=>{if(e.key==='f'||e.key==='F')fsToggle()});
+let wl=null;async function wake(){try{if('wakeLock' in navigator&&!wl){wl=await navigator.wakeLock.request('screen');wl.addEventListener('release',()=>wl=null)}}catch(e){}}
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)wake()});wake();
+let it;const idle=()=>{document.body.classList.remove('idle');clearTimeout(it);it=setTimeout(()=>document.body.classList.add('idle'),3000)};
+addEventListener('mousemove',idle);idle();setTimeout(()=>hint.classList.add('off'),12000);
+</script></body></html>

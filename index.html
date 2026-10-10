@@ -157,6 +157,7 @@ body{-webkit-text-size-adjust:100%}
     <small>🔊 Activá el sonido para la mejor experiencia</small>
   </div>
 </div>
+<button id="tvfs" type="button" aria-label="Pantalla completa" style="position:fixed;top:0;right:0;width:64px;height:64px;opacity:0;background:transparent;border:0;z-index:300;cursor:default"></button>
 <canvas id="side"></canvas>
 <button id="snd" type="button" aria-label="Silenciar o activar sonido">
   <svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
@@ -290,6 +291,10 @@ for(const p of SP){p.y-=p.v;p.a+=.03;p.x+=Math.sin(p.a)*.35;if(p.y<-20)Object.as
  if(p.s)star(p.x,p.y,p.r,al);else{sx.fillStyle=`rgba(240,194,122,${al})`;sx.shadowColor='rgba(240,194,122,.8)';sx.shadowBlur=8;sx.beginPath();sx.arc(p.x,p.y,p.r,0,7);sx.fill();sx.shadowBlur=0}}
 for(let i=B.length-1;i>=0;i--){const b=B[i];b.x+=b.vx;b.y+=b.vy;b.vy+=.12;b.vx*=.985;b.l-=.012;if(b.l<=0){B.splice(i,1);continue}sx.fillStyle=`rgba(240,194,122,${b.l})`;sx.beginPath();sx.arc(b.x,b.y,b.r,0,7);sx.fill()}
 requestAnimationFrame(loop)})();
+// Botón invisible (arriba a la derecha) y tecla F: pantalla completa para TV
+const fsT=()=>{const d=document,e=d.documentElement;if(!d.fullscreenElement&&!d.webkitFullscreenElement){(e.requestFullscreen||e.webkitRequestFullscreen||(()=>{})).call(e)}else{(d.exitFullscreen||d.webkitExitFullscreen||(()=>{})).call(d)}};
+document.getElementById('tvfs').addEventListener('click',fsT);
+addEventListener('keydown',e=>{if((e.key==='f'||e.key==='F')&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))fsT()});
 // Chispas doradas
 (()=>{const c=document.getElementById('spark'),x=c.getContext('2d');let W,H,P=[];
 const rs=()=>{W=c.width=c.offsetWidth;H=c.height=c.offsetHeight};rs();addEventListener('resize',rs);
