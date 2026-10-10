@@ -2,17 +2,16 @@
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" sizes="48x48" href="/img/jz-48.png"><link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
-<title>Juegos y Premios — Josué 37</title>
+<title>Tragamonedas — Josué 37</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#160d07">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Mr+Dafoe&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/shared.css">
 <style>
-.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:26px 22px;margin-bottom:18px}
-.card h2{font-family:'Mr Dafoe',cursive;font-weight:400;font-size:2.4rem;line-height:1.2;text-align:center;padding:.1em 0}
-.card p{color:var(--mut);text-align:center;margin-bottom:6px}
-ol{margin:10px 0 0 20px;color:var(--mut)}ol li{margin:6px 0}
-form{display:grid;gap:14px;margin-top:18px}
+.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:26px 22px;margin-bottom:18px;text-align:center}
+.card h2{font-family:'Mr Dafoe',cursive;font-weight:400;font-size:2.4rem;line-height:1.2;padding:.1em 0}
+.card p{color:var(--mut)}
+form{display:grid;gap:14px;margin-top:18px;text-align:left}
 label{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
 input{width:100%;margin-top:6px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--tx);font:inherit;font-size:1rem}
 input:focus{outline:0;border-color:var(--gold)}
@@ -20,42 +19,92 @@ input:focus{outline:0;border-color:var(--gold)}
 .chk{display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--mut)}
 .chk input{width:20px;margin:3px 0 0;flex:none}
 #msg{text-align:center;min-height:1.4em;margin-top:6px}.ok{color:#9be3a8}.err{color:#ff9d8a}
-.done{display:none;text-align:center}.done .big{font-size:3rem}
+[hidden]{display:none!important}
+
+.slot{display:flex;justify-content:center;gap:10px;margin:18px 0}
+.reel{width:76px;height:88px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:2.6rem;box-shadow:inset 0 0 18px rgba(0,0,0,.5)}
+.reel.spin{animation:spin .12s linear infinite}
+@keyframes spin{0%{transform:translateY(-4px)}50%{transform:translateY(4px)}100%{transform:translateY(-4px)}}
+.reel.stop{animation:settle .3s ease-out}
+@keyframes settle{0%{transform:scale(1.15)}100%{transform:scale(1)}}
+#spin{font-size:1rem;padding:16px 44px}
+#spin[disabled]{opacity:.5;cursor:default}
+
+.won{border-radius:20px;overflow:hidden;position:relative;margin-bottom:18px;min-height:260px;display:flex;align-items:center;justify-content:center;background:#000}
+.won img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.won .in{position:relative;z-index:1;padding:34px 22px;text-align:center}
+.won .big{font-family:'Mr Dafoe',cursive;font-size:2.8rem;line-height:1.2;padding:.1em 0}
+.won .pz{font-size:1.15rem;font-weight:600;margin-top:6px}
+.sorpresa{font-size:4.2rem;line-height:1}
 </style></head><body>
 <canvas id="side"></canvas>
 <div class="wrap">
   <div class="top"><img src="/img/jz-192.png" alt="JZ" style="width:56px;height:56px;border-radius:14px;display:block;margin:0 auto 4px"><div class="t gold">Josué 37</div><div class="s">Juegos &amp; Premios</div></div>
 
-  <div class="card" id="c1">
-    <h2 class="gold">Sumate al sorteo</h2>
-    <p>Dejá tus datos y participás por los premios sorpresa de la noche. El sorteo se realiza en el evento.</p>
+  <div class="card" id="start">
+    <h2 class="gold">Tragamonedas</h2>
+    <p>Dejá tus datos, girá una sola vez y mirá qué te tocó. ¡Todos se llevan algo! 🍀</p>
     <form id="f" novalidate>
       <div class="hp"><label>No completar<input name="web" tabindex="-1" autocomplete="off"></label></div>
       <label>Nombre y apellido<input name="nombre" required maxlength="80" autocomplete="name"></label>
       <label>WhatsApp<input name="whatsapp" type="tel" inputmode="tel" required maxlength="20" autocomplete="tel" placeholder="385 000 0000"></label>
-      <label class="chk"><input type="checkbox" name="ok" required><span>Acepto participar del sorteo y que me contacten por WhatsApp si resulto ganador/a.</span></label>
-      <div style="text-align:center"><button class="btn fill" id="send" type="submit">Quiero participar</button><div id="msg" role="status"></div></div>
+      <label class="chk"><input type="checkbox" name="ok" required><span>Acepto participar y que me contacten por WhatsApp si resulto ganador/a.</span></label>
+      <div style="text-align:center"><button class="btn fill" id="send" type="submit">Quiero jugar</button><div id="msg" role="status"></div></div>
     </form>
   </div>
-  <div class="card done" id="done"><div class="big">🍀</div><h2 class="gold">¡Ya estás participando!</h2><p>Quedate atento durante la noche. ¡Mucha suerte!</p></div>
 
-  <div class="card">
-    <h2 class="gold">Cómo funciona</h2>
-    <ol><li>Completá el formulario una sola vez.</li><li>Quedate en la fiesta: el sorteo se hace durante la noche.</li><li>Si salís sorteado/a, te llamamos por tu nombre en el evento.</li></ol>
+  <div class="card" id="game" hidden>
+    <h2 class="gold">¡Girá!</h2>
+    <p>Tocá el botón y esperá a que paren los 3 rodillos.</p>
+    <div class="slot"><div class="reel" id="r1">🍒</div><div class="reel" id="r2">🍋</div><div class="reel" id="r3">🔔</div></div>
+    <button class="btn fill" id="spin" type="button">¡Girar!</button>
+    <div id="msg2" role="status" style="min-height:1.4em;margin-top:10px"></div>
   </div>
+
+  <div class="won" id="wonMayor" hidden><img src="/img/ganador.jpg" alt=""><div class="in"><div class="big gold">¡GANASTE!</div><div class="pz" id="pzMayor"></div></div></div>
+  <div class="card" id="doneSorpresa" hidden><div class="sorpresa">🎁</div><h2 class="gold" id="pzSorpresa"></h2><p>Pasá por la organización para reclamarlo durante la fiesta. ¡Gracias por jugar!</p></div>
+  <div class="card" id="doneMayorInfo" hidden><p>Nos vamos a contactar por WhatsApp para coordinar tu estadía. ¡Felicitaciones! 🥂</p></div>
 </div>
 <footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
 <script src="/shared.js"></script>
 <script>
-const f=document.getElementById('f'),msg=document.getElementById('msg'),btn=document.getElementById('send');
-try{if(localStorage.getItem('sorteo37')){c1.style.display='none';done.style.display='block'}}catch(e){}
-f.addEventListener('submit',async e=>{e.preventDefault();
- if(!f.nombre.value.trim()||f.whatsapp.value.replace(/\D/g,'').length<8){msg.className='err';msg.textContent='Completá nombre y WhatsApp.';return}
- if(!f.ok.checked){msg.className='err';msg.textContent='Tenés que aceptar para participar.';return}
- btn.disabled=true;msg.className='';msg.textContent='Enviando…';
- try{const r=await fetch('/api/sorteo',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nombre:f.nombre.value,whatsapp:f.whatsapp.value,web:f.web.value})});
- if(!r.ok)throw 0;try{localStorage.setItem('sorteo37','1')}catch(e){}
- c1.style.display='none';done.style.display='block';scrollTo({top:0,behavior:'smooth'})}
- catch(err){msg.className='err';msg.textContent='No se pudo enviar. Probá de nuevo.';btn.disabled=false}});
+const $=id=>document.getElementById(id);
+const KEY='juegos37';
+const SYMS=['🍒','🍋','🔔','💎','7️⃣','🍀'];
+let player={},premios=null;
+
+(async()=>{
+ try{premios=await (await fetch('/juegos/premios.json',{cache:'no-store'})).json()}catch(e){}
+ try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.premio)showResult(s.premio,s.mayor,true)}catch(e){}
+})();
+
+$('f').addEventListener('submit',e=>{e.preventDefault();const f=e.target,m=$('msg');
+ if(!f.nombre.value.trim()||f.whatsapp.value.replace(/\D/g,'').length<8){m.className='err';m.textContent='Completá nombre y WhatsApp.';return}
+ if(!f.ok.checked){m.className='err';m.textContent='Tenés que aceptar para jugar.';return}
+ player={nombre:f.nombre.value.trim(),whatsapp:f.whatsapp.value.trim(),web:f.web.value};
+ $('start').hidden=true;$('game').hidden=false});
+
+$('spin').addEventListener('click',()=>{
+ $('spin').disabled=true;$('msg2').textContent='';
+ const reels=[$('r1'),$('r2'),$('r3')];
+ reels.forEach(r=>r.classList.add('spin'));
+ const timers=reels.map(r=>setInterval(()=>r.textContent=SYMS[Math.random()*SYMS.length|0],70));
+ const stops=[900,1300,1800];
+ reels.forEach((r,i)=>setTimeout(()=>{clearInterval(timers[i]);r.classList.remove('spin');r.textContent=SYMS[Math.random()*SYMS.length|0];r.classList.add('stop');setTimeout(()=>r.classList.remove('stop'),300)},stops[i]));
+ setTimeout(sortear,stops[2]+350)});
+
+async function sortear(){
+ const mayor=Math.random()<((premios&&premios.probabilidadMayor)||.05);
+ const opciones=(premios&&premios.sorpresas)||['Premio sorpresa'];
+ const premio=mayor?((premios&&premios.premioMayor)||'¡Ganaste el premio mayor!'):opciones[Math.random()*opciones.length|0];
+ try{localStorage.setItem(KEY,JSON.stringify({premio,mayor}))}catch(e){}
+ showResult(premio,mayor,false);
+ try{await fetch('/api/premio',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...player,premio,mayor})})}catch(e){}}
+
+function showResult(premio,mayor,again){
+ $('start').hidden=true;$('game').hidden=true;
+ if(mayor){$('wonMayor').hidden=false;$('pzMayor').textContent=premio;$('doneMayorInfo').hidden=false}
+ else{$('doneSorpresa').hidden=false;$('pzSorpresa').textContent=premio}
+ if(again){scrollTo({top:0,behavior:'smooth'})}}
 </script><script src="/wa.js" defer></script>
 </body></html>
