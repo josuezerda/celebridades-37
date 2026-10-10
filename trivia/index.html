@@ -92,4 +92,5 @@ async function finish(){clearInterval(tick);const secs=Math.round((Date.now()-t0
 function showEnd(p,t,again){$('start').hidden=true;$('game').hidden=true;$('end').hidden=false;$('score').textContent=`${p}/${t}`;
  $('endt').textContent=again?'Ya jugaste':(p>=t*.8?'¡Crack total!':p>=t*.5?'¡Muy bien!':'¡Gracias por jugar!');
  $('endp').textContent=again?'Cada persona juega una sola vez. Los ganadores se anuncian en la fiesta.':'Tu resultado quedó registrado. Los ganadores se anuncian en la fiesta. ¡Mucha suerte! 🍀'}
-</script></body></html>
+</script><script src="/wa.js" defer></script>
+</body></html>

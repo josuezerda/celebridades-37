@@ -50,4 +50,5 @@ const card=([f,n,d])=>`<button class="drink" type="button" data-f="${f}" data-n=
 g1.innerHTML=T.map(card).join('');g2.innerHTML=I.map(card).join('');
 document.addEventListener('click',e=>{const b=e.target.closest('.drink');if(!b)return;si.src='/img/tragos/'+b.dataset.f+'.jpg';sn.textContent=b.dataset.n;sd.textContent=b.dataset.d;show.classList.add('on')});
 const cl=()=>show.classList.remove('on');sx.onclick=cl;document.getElementById('x').onclick=cl;show.addEventListener('click',e=>{if(e.target===show)cl()});addEventListener('keydown',e=>{if(e.key==='Escape')cl()});
-</script></body></html>
+</script><script src="/wa.js" defer></script>
+</body></html>
