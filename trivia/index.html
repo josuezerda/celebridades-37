@@ -1,96 +1,25 @@
 <!doctype html>
 <html lang="es"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" sizes="48x48" href="/img/jz-48.png"><link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <title>Trivia 37 — Josué 37</title>
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#160d07">
-<link rel="icon" type="image/png" sizes="48x48" href="/img/jz-48.png"><link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+<meta http-equiv="refresh" content="0; url=https://eventos.fusionia.com.ar/jugar/1235a3cf-1caf-4635-94e0-47922c3c241a">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Mr+Dafoe&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/shared.css">
-<style>
-.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:26px 20px;margin-bottom:18px;text-align:center}
-.card h2{font-family:'Mr Dafoe',cursive;font-weight:400;font-size:2.4rem;line-height:1.2;padding:.1em 0}
-.card p{color:var(--mut)}
-form{display:grid;gap:14px;margin-top:18px;text-align:left}
-label{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
-input[type=text],input[type=tel]{width:100%;margin-top:6px;padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--tx);font:inherit;font-size:1rem}
-input:focus{outline:0;border-color:var(--gold)}
-.hp{position:absolute;left:-9999px}
-.chk{display:flex;gap:10px;align-items:flex-start;text-transform:none;letter-spacing:0;font-size:.82rem;color:var(--mut)}
-.chk input{width:20px;margin:3px 0 0;flex:none}
-.bar{height:6px;border-radius:9px;background:rgba(255,255,255,.08);overflow:hidden;margin-bottom:6px}
-.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:.4s}
-.meta{display:flex;justify-content:space-between;font-size:.72rem;letter-spacing:.2em;color:var(--mut);text-transform:uppercase;margin-bottom:16px}
-.q{font-size:1.25rem;font-weight:400;line-height:1.4;margin-bottom:18px}
-.opt{display:block;width:100%;text-align:left;padding:15px 16px;margin-bottom:10px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--tx);font:inherit;font-size:1rem;cursor:pointer;transition:.2s}
-.opt:active{transform:scale(.98)}
-.opt.ok{background:rgba(120,220,150,.18);border-color:#7ddc96}
-.opt.no{background:rgba(255,110,90,.16);border-color:#ff8a78}
-.opt[disabled]{pointer-events:none}
-#msg{text-align:center;min-height:1.4em;margin-top:6px}.okc{color:#9be3a8}.err{color:#ff9d8a}
-.big{font-family:'Mr Dafoe',cursive;font-size:5rem;line-height:1.1;display:inline-block;padding:.1em .3em}
-[hidden]{display:none!important}
-</style></head><body>
+<style>.card{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:20px;padding:26px 22px;text-align:center}.card h2{font-family:'Mr Dafoe',cursive;font-weight:400;font-size:2.4rem;padding:.1em 0}.card p{color:var(--mut)}</style></head><body>
 <canvas id="side"></canvas>
 <div class="wrap">
   <div class="top"><img src="/img/jz-192.png" alt="JZ" style="width:56px;height:56px;border-radius:14px;display:block;margin:0 auto 4px"><div class="t gold">Trivia 37</div><div class="s">Josué 37 · Sunset</div></div>
-
-  <div class="card" id="start">
+  <div class="card">
     <h2 class="gold">¿Cuánto sabés?</h2>
-    <p id="prem"></p>
-    <p style="margin-top:8px;font-size:.88rem">Se juega <b>una sola vez</b>. En caso de empate, gana quien responda más rápido.</p>
-    <form id="f" novalidate>
-      <div class="hp"><label>No completar<input name="web" tabindex="-1" autocomplete="off"></label></div>
-      <label>Nombre y apellido<input type="text" name="nombre" maxlength="80" autocomplete="name"></label>
-      <label>WhatsApp<input type="tel" name="whatsapp" inputmode="tel" maxlength="20" autocomplete="tel" placeholder="385 000 0000"></label>
-      <label class="chk"><input type="checkbox" name="ok"><span>Acepto participar y que me contacten por WhatsApp si resulto ganador/a.</span></label>
-      <div style="text-align:center"><button class="btn fill" type="submit">Empezar</button><div id="msg" role="status"></div></div>
-    </form>
-  </div>
-
-  <div class="card" id="game" hidden>
-    <div class="bar"><i id="bar"></i></div>
-    <div class="meta"><span id="num"></span><span id="tm"></span></div>
-    <div class="q" id="q"></div>
-    <div id="opts"></div>
-  </div>
-
-  <div class="card" id="end" hidden>
-    <div class="big gold" id="score"></div>
-    <h2 class="gold" id="endt"></h2>
-    <p id="endp"></p>
+    <p>Te estamos llevando a la trivia…</p>
+    <p style="margin-top:14px"><a class="btn fill" href="https://eventos.fusionia.com.ar/jugar/1235a3cf-1caf-4635-94e0-47922c3c241a">Entrar a jugar</a></p>
   </div>
 </div>
 <footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
 <script src="/shared.js"></script>
-<script>
-const $=id=>document.getElementById(id);
-let Q=[],cur=0,pts=0,t0=0,tick=null,lock=false,player={};
-const KEY='trivia37';
-(async()=>{
- try{const d=await (await fetch('/trivia/questions.json',{cache:'no-store'})).json();Q=d.preguntas||[];$('prem').textContent=d.premio||''}catch(e){}
- try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.done){showEnd(s.pts,s.total,true)}}catch(e){}
-})();
-$('f').addEventListener('submit',e=>{e.preventDefault();const f=e.target,m=$('msg');
- if(!f.nombre.value.trim()||f.whatsapp.value.replace(/\D/g,'').length<8){m.className='err';m.textContent='Completá nombre y WhatsApp.';return}
- if(!f.ok.checked){m.className='err';m.textContent='Tenés que aceptar para jugar.';return}
- if(!Q.length){m.className='err';m.textContent='Cargando preguntas… probá de nuevo.';return}
- player={nombre:f.nombre.value.trim(),whatsapp:f.whatsapp.value.trim(),web:f.web.value};
- try{localStorage.setItem(KEY,JSON.stringify({started:1}))}catch(e){}
- $('start').hidden=true;$('game').hidden=false;t0=Date.now();tick=setInterval(()=>{$('tm').textContent=((Date.now()-t0)/1000|0)+' s'},500);show()});
-function show(){lock=false;const q=Q[cur];$('num').textContent=`Pregunta ${cur+1} de ${Q.length}`;$('bar').style.width=(cur/Q.length*100)+'%';$('q').textContent=q.q;
- $('opts').innerHTML=q.o.map((o,i)=>`<button class="opt" type="button" data-i="${i}"></button>`).join('');
- [...$('opts').children].forEach((b,i)=>b.textContent=q.o[i])}
-$('opts').addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b||lock)return;lock=true;const i=+b.dataset.i,c=Q[cur].c;
- [...$('opts').children].forEach(x=>x.disabled=true);
- if(i===c){pts++;b.classList.add('ok')}else{b.classList.add('no');$('opts').children[c].classList.add('ok')}
- setTimeout(()=>{cur++;cur<Q.length?show():finish()},1100)});
-async function finish(){clearInterval(tick);const secs=Math.round((Date.now()-t0)/1000);$('bar').style.width='100%';
- try{localStorage.setItem(KEY,JSON.stringify({done:1,pts,total:Q.length}))}catch(e){}
- showEnd(pts,Q.length,false);
- try{await fetch('/api/trivia',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...player,puntos:pts,total:Q.length,segundos:secs})})}catch(e){}}
-function showEnd(p,t,again){$('start').hidden=true;$('game').hidden=true;$('end').hidden=false;$('score').textContent=`${p}/${t}`;
- $('endt').textContent=again?'Ya jugaste':(p>=t*.8?'¡Crack total!':p>=t*.5?'¡Muy bien!':'¡Gracias por jugar!');
- $('endp').textContent=again?'Cada persona juega una sola vez. Los ganadores se anuncian en la fiesta.':'Tu resultado quedó registrado. Los ganadores se anuncian en la fiesta. ¡Mucha suerte! 🍀'}
-</script><script src="/wa.js" defer></script>
+<script>location.replace('https://eventos.fusionia.com.ar/jugar/1235a3cf-1caf-4635-94e0-47922c3c241a')</script>
+<script src="/wa.js" defer></script>
 </body></html>
