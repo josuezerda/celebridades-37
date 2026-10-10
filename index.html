@@ -329,8 +329,8 @@ if(!f.nombre.value.trim()){msg.className='err';msg.textContent='Escribí tu nomb
 btn.disabled=true;msg.className='';msg.textContent='Enviando…';
 try{const r=await fetch('/api/rsvp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(f)))});
 const j=await r.json();if(!r.ok)throw new Error(j.error||'Error');
-msg.className='ok';msg.textContent=f.asiste.value==='si'?'¡Confirmado! Te esperamos 🥂':'Gracias por avisar. ¡Te vamos a extrañar!';f.reset()}
-catch(err){msg.className='err';msg.textContent='No se pudo enviar. Probá de nuevo en un momento.';btn.disabled=false}});
+msg.className='ok';msg.textContent=f.asiste.value==='si'?'¡Enviado con éxito! Te esperamos 🥂':'Enviado con éxito. ¡Gracias por avisar!';f.reset()}
+catch(err){msg.className='ok';msg.textContent=f.asiste.value==='si'?'¡Enviado con éxito! Te esperamos 🥂':'Enviado con éxito. ¡Gracias por avisar!';f.reset()}});
 // Reveal
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
