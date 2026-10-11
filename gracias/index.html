@@ -28,6 +28,12 @@
 #snd:hover{background:var(--gold)}#snd:hover svg{stroke:#1a0f08}
 #snd svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 #snd .off{display:none}#snd.muted .on{display:none}#snd.muted .off{display:block}
+.pcount{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--mut);font-size:.75rem;letter-spacing:.05em}
+.pcount b{color:var(--gold)}
+.pdot{position:relative;width:8px;height:8px}
+.pdot i{position:absolute;inset:0;border-radius:50%;background:var(--gold)}
+.pdot i:first-child{animation:pping 1.6s cubic-bezier(0,0,.2,1) infinite}
+@keyframes pping{75%,100%{transform:scale(2.2);opacity:0}}
 </style></head><body>
 <canvas id="side"></canvas>
 <button id="snd" type="button" class="muted" aria-label="Silenciar o activar sonido">
@@ -40,6 +46,7 @@
   <div class="card"><h2 class="gold" id="ti">Gracias</h2><p id="tx"></p></div>
   <div id="media"></div>
   <div class="slider" id="slider"></div>
+  <div style="text-align:center"><div id="pcount" style="display:none" class="pcount"><span class="pdot"><i></i><i></i></span><span id="pcount-tx"></span></div></div>
   <div class="act" id="act"></div>
 </div>
 <footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
@@ -68,7 +75,8 @@ document.getElementById('snd').addEventListener('click',()=>{if(!ytReady)return;
   any=true;act.innerHTML=`<a class="btn fill" href="${c.album}" target="_blank" rel="noopener">Ver álbum completo</a>`;
   try{
    const r=await fetch('https://eventos.fusionia.com.ar/api/album/josue/recent',{cache:'no-store'});
-   const {ids}=await r.json();
+   const {ids,count}=await r.json();
+   if(count){document.getElementById('pcount-tx').innerHTML=`<b>${count}</b> fotos · cargando más...`;document.getElementById('pcount').style.display='inline-flex'}
    if(ids&&ids.length){
     const sl=document.getElementById('slider');sl.classList.add('show');
     // Tandas de 3 fotos que se van apareciendo (crossfade), rotando entre los grupos.
