@@ -65,7 +65,7 @@ document.getElementById('snd').addEventListener('click',()=>{if(!ytReady)return;
   m.insertAdjacentHTML('beforeend',/youtu/.test(c.video)||/^[\w-]{11}$/.test(c.video)&&y?`<div class="vid"><iframe src="https://www.youtube.com/embed/${y[1]}?rel=0&playsinline=1" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe></div>`:`<div class="vid"><video src="${c.video}" controls playsinline></video></div>`)}
  if(c.fotos&&c.fotos.length){any=true;m.insertAdjacentHTML('beforeend','<div class="ph">'+c.fotos.map(f=>`<img src="${f}" loading="lazy" alt="Foto de la noche">`).join('')+'</div>')}
  if(c.album&&/^https?:\/\//.test(c.album)){
-  any=true;act.innerHTML=`<a class="btn fill" href="${c.album}" target="_blank" rel="noopener">Descargar fotos completas</a>`;
+  any=true;act.innerHTML=`<a class="btn fill" href="${c.album}" target="_blank" rel="noopener">Ver álbum completo</a>`;
   try{
    const r=await fetch('https://eventos.fusionia.com.ar/api/album/josue/recent',{cache:'no-store'});
    const {ids}=await r.json();
