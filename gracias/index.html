@@ -30,7 +30,8 @@
 #snd .off{display:none}#snd.muted .on{display:none}#snd.muted .off{display:block}
 .pcount{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:7px 14px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--mut);font-size:.75rem;letter-spacing:.05em}
 .pcount b{color:var(--gold)}
-.ig{max-width:420px;margin:18px auto 0}
+.ig{max-width:360px;margin:18px auto 0}
+.ig video{width:100%;display:block;border-radius:16px;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.55)}
 </style></head><body>
 <canvas id="side"></canvas>
 <button id="snd" type="button" class="muted" aria-label="Silenciar o activar sonido">
@@ -46,9 +47,7 @@
   <div style="text-align:center"><div id="pcount" style="display:none" class="pcount"><span id="pcount-tx"></span></div></div>
   <div class="act" id="act"></div>
   <div class="ig">
-    <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DeXl3mLSltt/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:16px;margin:0 auto;max-width:420px;width:100%">
-      <a href="https://www.instagram.com/p/DeXl3mLSltt/" target="_blank" rel="noopener"></a>
-    </blockquote>
+    <video id="igvid" src="/video/josue37.mp4" poster="/video/josue37-poster.jpg" controls playsinline preload="metadata"></video>
   </div>
 </div>
 <footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
@@ -62,6 +61,7 @@ window.onYouTubeIframeAPIReady=()=>{yt=new YT.Player('yt',{videoId:VID,playerVar
 events:{onReady:()=>{ytReady=true;yt.playVideo()},onStateChange:e=>{if(e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED)yt.playVideo()}}})};
 setInterval(()=>{if(!ytReady)return;try{const s=yt.getPlayerState();if(s!==YT.PlayerState.PLAYING&&s!==YT.PlayerState.BUFFERING)yt.playVideo()}catch(e){}},1500);
 document.getElementById('snd').addEventListener('click',()=>{if(!ytReady)return;const m=yt.isMuted();m?yt.unMute():yt.mute();document.getElementById('snd').classList.toggle('muted',!m)});
+document.getElementById('igvid')?.addEventListener('play',()=>{if(ytReady&&!yt.isMuted()){yt.mute();document.getElementById('snd').classList.add('muted')}});
 })();
 (async()=>{
  const slug=decodeURIComponent(location.pathname.split('/').filter(Boolean)[1]||'').toLowerCase();
@@ -95,6 +95,4 @@ document.getElementById('snd').addEventListener('click',()=>{if(!ytReady)return;
  m.addEventListener('click',e=>{if(e.target.matches('.ph img')){lbi.src=e.target.src;lb.classList.add('on')}});
  const cl=()=>lb.classList.remove('on');lbx.onclick=cl;lb.onclick=e=>{if(e.target===lb)cl()};addEventListener('keydown',e=>{if(e.key==='Escape')cl()});
 })();
-</script><script src="/wa.js" defer></script>
-<script async src="//www.instagram.com/embed.js"></script>
-</body></html>
+</script><script src="/wa.js" defer></script></body></html>

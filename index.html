@@ -102,7 +102,8 @@ body:not(.go) .hero .bg{animation-play-state:paused}
 .vid #yt,.vid iframe{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .vid .shield{position:absolute;inset:0;z-index:5;background:transparent;touch-action:none;-webkit-tap-highlight-color:transparent;cursor:default}
 .vid{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-.ig{max-width:420px;margin:28px auto 0}
+.ig{max-width:360px;margin:28px auto 0}
+.ig video{width:100%;display:block;border-radius:16px;background:#000;box-shadow:0 20px 60px rgba(0,0,0,.55),0 0 40px rgba(240,194,122,.1)}
 /* Botón sonido */
 #snd{position:fixed;right:16px;bottom:16px;z-index:60;width:52px;height:52px;border-radius:50%;border:1px solid var(--gold);background:rgba(22,13,7,.78);backdrop-filter:blur(8px);cursor:pointer;display:none;place-items:center;transition:.25s}
 #snd.show{display:grid}
@@ -222,9 +223,7 @@ body{-webkit-text-size-adjust:100%}
     <h2 class="gold">El álbum</h2>
     <a class="btn fill" href="https://eventos.fusionia.com.ar/album/josue" target="_blank" rel="noopener">Ver álbum completo</a>
     <div class="ig">
-      <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DeXl3mLSltt/" data-instgrm-version="14" style="background:#FFF;border:0;border-radius:16px;margin:0 auto;max-width:420px;width:100%">
-        <a href="https://www.instagram.com/p/DeXl3mLSltt/" target="_blank" rel="noopener"></a>
-      </blockquote>
+      <video id="igvid" src="/video/josue37.mp4" poster="/video/josue37-poster.jpg" controls playsinline preload="metadata"></video>
     </div>
   </div>
 </section>
@@ -293,6 +292,7 @@ document.getElementById('open').addEventListener('click',()=>{
   document.getElementById('gate').classList.add('out');snd.classList.add('show');burst();
 });
 snd.addEventListener('click',()=>{if(!ytReady)return;const m=yt.isMuted();m?yt.unMute():yt.mute();snd.classList.toggle('muted',!m)});
+document.getElementById('igvid')?.addEventListener('play',()=>{if(ytReady&&!yt.isMuted()){yt.mute();snd.classList.add('muted')}});
 // ===== Partículas doradas laterales =====
 const sc=document.getElementById('side'),sx=sc.getContext('2d');let SW,SH,SP=[],B=[];
 const sr=()=>{const d=devicePixelRatio||1;SW=innerWidth;SH=innerHeight;sc.width=SW*d;sc.height=SH*d;sx.setTransform(d,0,0,d,0,0)};sr();addEventListener('resize',sr);
@@ -349,7 +349,5 @@ catch(err){msg.className='ok';msg.textContent=f.asiste.value==='si'?'¡Enviado c
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');io.unobserve(x.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
-<script src="/wa.js" defer></script>
-<script async src="//www.instagram.com/embed.js"></script>
-</body>
+<script src="/wa.js" defer></script></body>
 </html>
