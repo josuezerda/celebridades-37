@@ -19,18 +19,40 @@
 #lb{position:fixed;inset:0;z-index:200;background:rgba(5,3,1,.95);display:none}
 #lb.on{display:flex}#lb img{margin:auto;max-width:96vw;max-height:90vh;border-radius:10px}
 #lbx{position:fixed;top:max(14px,env(safe-area-inset-top));right:14px;width:46px;height:46px;border-radius:50%;border:1px solid var(--gold);background:rgba(22,13,7,.85);color:var(--gold);font-size:1.2rem;cursor:pointer}
+.slider{position:relative;aspect-ratio:4/3;max-width:420px;margin:0 auto 18px;border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#000;display:none}
+.slider.show{display:block}
+.slider img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+.slider img.on{opacity:1}
+#snd{position:fixed;right:16px;bottom:16px;z-index:60;width:52px;height:52px;border-radius:50%;border:1px solid var(--gold);background:rgba(22,13,7,.78);backdrop-filter:blur(8px);cursor:pointer;display:grid;place-items:center;transition:.25s}
+#snd:hover{background:var(--gold)}#snd:hover svg{stroke:#1a0f08}
+#snd svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#snd .off{display:none}#snd.muted .on{display:none}#snd.muted .off{display:block}
 </style></head><body>
 <canvas id="side"></canvas>
+<button id="snd" type="button" class="muted" aria-label="Silenciar o activar sonido">
+  <svg class="on" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+  <svg class="off" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>
+</button>
+<div id="yt" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"></div>
 <div class="wrap">
   <div class="top"><img src="/img/jz-192.png" alt="JZ" style="width:56px;height:56px;border-radius:14px;display:block;margin:0 auto 4px"><div class="t gold">Josué 37</div><div class="s">Sunset Party</div></div>
   <div class="card"><h2 class="gold" id="ti">Gracias</h2><p id="tx"></p></div>
   <div id="media"></div>
+  <div class="slider" id="slider"></div>
   <div class="act" id="act"></div>
 </div>
 <footer><a href="/">← Volver a la invitación</a><br><br>JOSUÉ 37 · SUNSET PARTY</footer>
 <div id="lb"><button id="lbx" type="button" aria-label="Cerrar">✕</button><img id="lbi" alt=""></div>
 <script src="/shared.js"></script>
 <script>
+// ===== Música de fondo (misma pista que la invitación) =====
+(()=>{const VID='FxDMMeWK1ZE';let yt=null,ytReady=false;
+const tag=document.createElement('script');tag.src='https://www.youtube.com/iframe_api';document.head.appendChild(tag);
+window.onYouTubeIframeAPIReady=()=>{yt=new YT.Player('yt',{videoId:VID,playerVars:{controls:0,disablekb:1,fs:0,rel:0,modestbranding:1,playsinline:1,loop:1,playlist:VID,mute:1,autoplay:1},
+events:{onReady:()=>{ytReady=true;yt.playVideo()},onStateChange:e=>{if(e.data===YT.PlayerState.PAUSED||e.data===YT.PlayerState.ENDED)yt.playVideo()}}})};
+setInterval(()=>{if(!ytReady)return;try{const s=yt.getPlayerState();if(s!==YT.PlayerState.PLAYING&&s!==YT.PlayerState.BUFFERING)yt.playVideo()}catch(e){}},1500);
+document.getElementById('snd').addEventListener('click',()=>{if(!ytReady)return;const m=yt.isMuted();m?yt.unMute():yt.mute();document.getElementById('snd').classList.toggle('muted',!m)});
+})();
 (async()=>{
  const slug=decodeURIComponent(location.pathname.split('/').filter(Boolean)[1]||'').toLowerCase();
  let c={};try{c=await (await fetch('/gracias/config.json',{cache:'no-store'})).json()}catch(e){}
@@ -41,7 +63,19 @@
  if(c.video){any=true;const y=c.video.match(/(?:v=|youtu\.be\/|embed\/|^)([\w-]{11})(?:[&?]|$)/);
   m.insertAdjacentHTML('beforeend',/youtu/.test(c.video)||/^[\w-]{11}$/.test(c.video)&&y?`<div class="vid"><iframe src="https://www.youtube.com/embed/${y[1]}?rel=0&playsinline=1" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe></div>`:`<div class="vid"><video src="${c.video}" controls playsinline></video></div>`)}
  if(c.fotos&&c.fotos.length){any=true;m.insertAdjacentHTML('beforeend','<div class="ph">'+c.fotos.map(f=>`<img src="${f}" loading="lazy" alt="Foto de la noche">`).join('')+'</div>')}
- if(c.album&&/^https?:\/\//.test(c.album)){any=true;act.innerHTML=`<a class="btn fill" href="${c.album}" target="_blank" rel="noopener">Ver álbum completo</a>`}
+ if(c.album&&/^https?:\/\//.test(c.album)){
+  any=true;act.innerHTML=`<a class="btn fill" href="${c.album}" target="_blank" rel="noopener">Descargar fotos completas</a>`;
+  try{
+   const r=await fetch('https://eventos.fusionia.com.ar/api/album/josue/recent',{cache:'no-store'});
+   const {ids}=await r.json();
+   if(ids&&ids.length){
+    const sl=document.getElementById('slider');sl.classList.add('show');
+    sl.innerHTML=ids.map((id,i)=>`<img src="https://eventos.fusionia.com.ar/api/foto/${id}.jpg?w=700" loading="${i===0?'eager':'lazy'}" class="${i===0?'on':''}" alt="Foto de la noche">`).join('');
+    const imgs=sl.querySelectorAll('img');let idx=0;
+    if(imgs.length>1)setInterval(()=>{imgs[idx].classList.remove('on');idx=(idx+1)%imgs.length;imgs[idx].classList.add('on')},3000);
+   }
+  }catch(e){}
+ }
  if(!any)m.innerHTML='<div class="card"><p>Muy pronto vas a poder ver acá las fotos y el video de la noche. ¡Gracias por ser parte! 💛</p></div>';
  m.addEventListener('click',e=>{if(e.target.matches('.ph img')){lbi.src=e.target.src;lb.classList.add('on')}});
  const cl=()=>lb.classList.remove('on');lbx.onclick=cl;lb.onclick=e=>{if(e.target===lb)cl()};addEventListener('keydown',e=>{if(e.key==='Escape')cl()});
